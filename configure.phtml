@@ -1,0 +1,49 @@
+<?php
+declare(strict_types=1);
+/** @var GoogleNewsTopStoriesExtension $this */
+?>
+<p><?= _t('ext.google_news_top_stories.intro') ?></p>
+<form action="<?= _url('extension', 'configure', 'e', urlencode($this->getName())) ?>" method="post">
+	<input type="hidden" name="_csrf" value="<?= FreshRSS_Auth::csrfToken() ?>" />
+	<div class="form-group">
+		<label class="group-name" for="top"><?= _t('ext.google_news_top_stories.top') ?></label>
+		<div class="group-controls">
+			<input type="number" id="top" name="top" min="1" max="<?= GoogleNewsTopStories::TOP_MAX ?>" step="1" required="required" value="<?= $this->top() ?>" />
+			<p class="help"><?= _i('help') ?> <?= _t('ext.google_news_top_stories.top_help') ?></p>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="group-name" for="min_hours"><?= _t('ext.google_news_top_stories.min_hours') ?></label>
+		<div class="group-controls">
+			<input type="number" id="min_hours" name="min_hours" min="0" max="<?= GoogleNewsTopStories::MIN_HOURS_MAX ?>" step="0.25" required="required" value="<?= $this->minHours() ?>" />
+			<p class="help"><?= _i('help') ?> <?= _t('ext.google_news_top_stories.min_hours_help') ?></p>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="group-name" for="date"><?= _t('ext.google_news_top_stories.date') ?></label>
+		<div class="group-controls">
+			<select id="date" name="date">
+				<?php foreach (GoogleNewsTopStories::DATES as $date) { ?>
+				<option value="<?= $date ?>"<?= $date === $this->date() ? ' selected="selected"' : '' ?>><?= _t('ext.google_news_top_stories.dates.' . $date) ?></option>
+				<?php } ?>
+			</select>
+			<p class="help"><?= _i('help') ?> <?= _t('ext.google_news_top_stories.date_help') ?></p>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="group-controls">
+			<label class="checkbox" for="title_time">
+				<input type="checkbox" name="title_time" id="title_time" value="1"<?= $this->titleTime() ? ' checked="checked"' : '' ?> />
+				<?= _t('ext.google_news_top_stories.title_time') ?>
+			</label>
+			<p class="help"><?= _i('help') ?> <?= _t('ext.google_news_top_stories.title_time_help') ?></p>
+		</div>
+	</div>
+	<p><?= _t('ext.google_news_top_stories.url_settings') ?></p>
+	<div class="form-group form-actions">
+		<div class="group-controls">
+			<button type="submit" class="btn btn-important"><?= _t('gen.action.submit') ?></button>
+			<button type="reset" class="btn"><?= _t('gen.action.cancel') ?></button>
+		</div>
+	</div>
+</form>
